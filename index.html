@@ -8,7 +8,7 @@
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #fce4ec, #f3e5f5, #e8eaf6);
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.88);
             --primary-color: #ff758c;
             --secondary-color: #ff7eb3;
             --text-main: #4a4a4a;
@@ -67,27 +67,67 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        .music-toggle {
+        .music-player-widget {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 100;
             background: var(--card-bg);
             border: 2px solid var(--accent-pink);
-            padding: 10px 15px;
+            padding: 10px 16px;
             border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(255, 117, 140, 0.25);
+            backdrop-filter: blur(10px);
             transition: 0.3s;
-            backdrop-filter: blur(5px);
         }
 
-        .music-toggle:hover {
-            transform: scale(1.05);
-            background: #fff;
+        .music-icon {
+            font-size: 1.2rem;
+            animation: pulseIcon 1.5s infinite ease-in-out;
+        }
+
+        .music-icon.playing {
+            animation: pulseIcon 1.2s infinite ease-in-out, spinNote 3s infinite linear;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--primary-color);
+            transition: 0.2s;
+        }
+
+        .player-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .volume-slider {
+            width: 60px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .audio-status-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 55px;
         }
 
         .container {
@@ -97,7 +137,7 @@
             max-width: 480px;
             background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.7);
             padding: 35px 25px;
             border-radius: 30px;
             box-shadow: 0 20px 40px rgba(255, 117, 140, 0.15);
@@ -200,7 +240,7 @@
         }
 
         .feedback-box {
-            background: rgba(255, 240, 245, 0.8);
+            background: rgba(255, 240, 245, 0.85);
             border-left: 4px solid var(--primary-color);
             padding: 15px;
             border-radius: 12px;
@@ -247,7 +287,7 @@
         }
 
         .grand-message-box {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 20px;
             border-radius: 20px;
             border: 2px dashed var(--accent-pink);
@@ -295,14 +335,22 @@
 </head>
 <body>
 
-    <!-- Musik Kotak Musik Selamat Ulang Tahun -->
-    <audio id="bg-audio" loop preload="auto">
-        <source src="https://ia800504.us.archive.org/33/items/HappyBirthdayToYouMusicBox/Happy%20Birthday%20to%20You%20(Music%20Box).mp3" type="audio/mpeg">
-    </audio>
+    <!-- Menyesuaikan persis dengan nama file di GitHub (.mp3.mp3) -->
+    <audio id="audio-cheerful" loop preload="auto" src="./birthday-cheerful.mp3.mp3"></audio>
+    <audio id="audio-melody" preload="auto" src="./happy-birthday.mp3.mp3"></audio>
+    <audio id="audio-piano" loop preload="auto" src="./birthday-piano.mp3.mp3"></audio>
 
-    <button class="music-toggle" id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+    <div class="music-player-widget">
+        <div class="music-icon" id="player-icon">🎵</div>
+        <div class="player-controls">
+            <button class="player-btn" id="play-pause-btn" onclick="togglePlayPause()" title="Play/Pause">⏸️</button>
+            <button class="player-btn" id="mute-btn" onclick="toggleMute()" title="Mute/Unmute">🔊</button>
+            <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.05" value="0.7" oninput="changeVolume(this.value)">
+        </div>
+        <span class="audio-status-text" id="audio-status">Paused</span>
+    </div>
+
     <canvas id="confetti-canvas"></canvas>
-
     <div class="bg-decorations" id="decorations"></div>
 
     <div class="container">
@@ -441,35 +489,120 @@
             decorContainer.appendChild(span);
         }
 
-        let isMusicPlaying = false;
-        
-        function playBackgroundMusic() {
-            const audio = document.getElementById('bg-audio');
-            const btn = document.getElementById('music-btn');
-            if (!isMusicPlaying) {
-                audio.play().then(() => {
-                    isMusicPlaying = true;
-                    btn.innerHTML = "🔊 Mute Music";
+        const audioCheerful = document.getElementById('audio-cheerful');
+        const audioMelody = document.getElementById('audio-melody');
+        const audioPiano = document.getElementById('audio-piano');
+
+        let userInteracted = false;
+        let isMuted = false;
+        let userPaused = false;
+        let currentTrack = 'cheerful';
+        let targetVolume = 0.7;
+
+        audioCheerful.volume = targetVolume;
+        audioMelody.volume = targetVolume;
+        audioPiano.volume = targetVolume;
+
+        function updatePlayerUI(isPlaying, statusText) {
+            const icon = document.getElementById('player-icon');
+            const btn = document.getElementById('play-pause-btn');
+            const status = document.getElementById('audio-status');
+
+            status.innerText = statusText;
+            if (isPlaying) {
+                icon.classList.add('playing');
+                btn.innerText = "⏸️";
+            } else {
+                icon.classList.remove('playing');
+                btn.innerText = "▶️";
+            }
+        }
+
+        function playTrack(trackName) {
+            if (userPaused) return;
+            currentTrack = trackName;
+
+            if (trackName !== 'cheerful') audioCheerful.pause();
+            if (trackName !== 'melody') audioMelody.pause();
+            if (trackName !== 'piano') audioPiano.pause();
+
+            let targetAudio = null;
+            if (trackName === 'cheerful') targetAudio = audioCheerful;
+            if (trackName === 'melody') targetAudio = audioMelody;
+            if (trackName === 'piano') targetAudio = audioPiano;
+
+            if (targetAudio) {
+                targetAudio.muted = isMuted;
+                targetAudio.play().then(() => {
+                    updatePlayerUI(true, trackName.toUpperCase());
                 }).catch(e => {
-                    console.log("Autoplay blocked or waiting user interaction", e);
+                    console.log("Play error:", e);
+                    updatePlayerUI(false, "Paused");
                 });
             }
         }
 
-        function toggleMusic() {
-            const audio = document.getElementById('bg-audio');
-            const btn = document.getElementById('music-btn');
-            if (!isMusicPlaying) {
-                audio.play().then(() => {
-                    btn.innerHTML = "🔊 Mute Music";
-                    isMusicPlaying = true;
-                }).catch(e => {
-                    console.log("Audio play error:", e);
-                });
+        function crossfadeToPiano() {
+            if (userPaused || currentTrack === 'piano') return;
+            currentTrack = 'piano';
+
+            audioPiano.currentTime = 0;
+            audioPiano.volume = 0;
+            audioPiano.muted = isMuted;
+            audioPiano.play().catch(e => console.log(e));
+
+            let vol = 0;
+            let cheerfulVol = audioCheerful.volume;
+            let fadeInterval = setInterval(() => {
+                vol += 0.05;
+                cheerfulVol -= 0.05;
+                if (vol >= targetVolume) {
+                    vol = targetVolume;
+                    audioPiano.volume = vol;
+                    audioCheerful.pause();
+                    audioCheerful.volume = targetVolume;
+                    clearInterval(fadeInterval);
+                    updatePlayerUI(true, "PIANO");
+                } else {
+                    audioPiano.volume = vol;
+                    if (cheerfulVol >= 0) audioCheerful.volume = cheerfulVol;
+                }
+            }, 100);
+        }
+
+        function togglePlayPause() {
+            userInteracted = true;
+            if (userPaused) {
+                userPaused = false;
+                playTrack(currentTrack);
             } else {
-                audio.pause();
-                btn.innerHTML = "🎵 Play Music";
-                isMusicPlaying = false;
+                userPaused = true;
+                audioCheerful.pause();
+                audioMelody.pause();
+                audioPiano.pause();
+                updatePlayerUI(false, "Paused");
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            audioCheerful.muted = isMuted;
+            audioMelody.muted = isMuted;
+            audioPiano.muted = isMuted;
+            document.getElementById('mute-btn').innerText = isMuted ? "🔇" : "🔊";
+        }
+
+        function changeVolume(val) {
+            targetVolume = parseFloat(val);
+            audioCheerful.volume = targetVolume;
+            audioMelody.volume = targetVolume;
+            audioPiano.volume = targetVolume;
+        }
+
+        function triggerAudioStart() {
+            if (!userInteracted && !userPaused) {
+                userInteracted = true;
+                playTrack('cheerful');
             }
         }
 
@@ -484,19 +617,20 @@
         }
 
         function goToScene(sceneNum) {
-            playBackgroundMusic(); // Otomatis menyalakan musik saat berpindah scene/klik tombol
+            triggerAudioStart();
             document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
             document.getElementById(`scene-${sceneNum}`).classList.add('active');
             updateProgress(sceneNum);
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if (sceneNum === 5) {
+                crossfadeToPiano();
                 startGrandMessage();
             }
         }
 
         function handleScene1(choice) {
-            playBackgroundMusic(); // Otomatis menyalakan musik saat tombol pertama diklik
+            triggerAudioStart();
             const fb = document.getElementById('scene1-feedback');
             fb.style.display = 'block';
             if (choice === 'see') {
@@ -511,14 +645,23 @@
         }
 
         function revealName() {
-            playBackgroundMusic();
+            triggerAudioStart();
             document.getElementById('reveal-prompt').style.display = 'none';
             document.getElementById('reveal-content').style.display = 'block';
+            
+            if (!userPaused && currentTrack !== 'melody') {
+                playTrack('melody');
+                setTimeout(() => {
+                    if (currentTrack === 'melody' && !userPaused) {
+                        playTrack('cheerful');
+                    }
+                }, 8000);
+            }
             triggerConfetti();
         }
 
         function handleAgeChoice(choice) {
-            playBackgroundMusic();
+            triggerAudioStart();
             const fb = document.getElementById('age-feedback');
             fb.style.display = 'block';
             if (choice === 'older') {
@@ -530,9 +673,8 @@
             document.getElementById('age-next-container').style.display = 'block';
         }
 
-        let currentCP = 1;
         function handleCheckpoint(qNum, answerText) {
-            playBackgroundMusic();
+            triggerAudioStart();
             const fb = document.getElementById('cp-feedback');
             fb.style.display = 'block';
             fb.innerHTML = `Selected: "${answerText}" — Noted! ✨`;
@@ -575,7 +717,7 @@
 
         let candleBlown = false;
         function blowCandle() {
-            playBackgroundMusic();
+            triggerAudioStart();
             if (candleBlown) return;
             candleBlown = true;
             document.getElementById('flame').innerHTML = '💨';
@@ -587,7 +729,7 @@
         }
 
         function showExtraSurprise() {
-            playBackgroundMusic();
+            triggerAudioStart();
             document.getElementById('extra-surprise-box').style.display = 'block';
             document.getElementById('final-signature').style.display = 'block';
             triggerConfetti();
@@ -595,12 +737,11 @@
         }
 
         function showFinalPlayful() {
-            playBackgroundMusic();
             document.getElementById('final-playful-msg').style.display = 'block';
         }
 
         function restartAdventure() {
-            playBackgroundMusic();
+            userPaused = false;
             messageTyped = false;
             candleBlown = false;
             document.getElementById('typed-msg-1').innerHTML = '';
@@ -619,6 +760,8 @@
             document.getElementById('cp-2').style.display = 'none';
             document.getElementById('cp-3').style.display = 'none';
             document.getElementById('cp-final').style.display = 'none';
+            
+            playTrack('cheerful');
             goToScene(1);
         }
 
