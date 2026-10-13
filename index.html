@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Muthia Qurrota Aini! 💗</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fce4ec, #f3e5f5, #e8eaf6);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --primary-color: #ff758c;
+            --secondary-color: #ff7eb3;
+            --text-main: #4a4a4a;
+            --text-heading: #2d2d2d;
+            --accent-pink: #ff8fab;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-decorations {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-item {
+            position: absolute;
+            opacity: 0.4;
+            animation: floatUp 8s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.5; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-pink);
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.2);
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.05);
+            background: #fff;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(255, 117, 140, 0.15);
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .scene {
+            display: none;
+            animation: fadeInScene 0.6s ease forwards;
+        }
+
+        .scene.active {
+            display: block;
+        }
+
+        @keyframes fadeInScene {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: 0.3s;
+        }
+
+        .progress-dot.active {
+            background: var(--primary-color);
+            transform: scale(1.3);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--text-heading);
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .highlight-name {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 117, 140, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--accent-pink);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: #fff5f7;
+            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.15);
+        }
+
+        .feedback-box {
+            background: rgba(255, 240, 245, 0.8);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #555;
+            display: none;
+            animation: popIn 0.4s ease;
+            text-align: left;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .interactive-icon {
+            font-size: 4rem;
+            margin: 15px 0;
+            cursor: pointer;
+            display: inline-block;
+            animation: bounceIcon 2s infinite ease-in-out;
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cake-container {
+            position: relative;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .candle-flame {
+            display: inline-block;
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 8px #ffeb3b); }
+        }
+
+        .grand-message-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px dashed var(--accent-pink);
+            margin-bottom: 20px;
+            text-align: left;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .grand-message-box p {
+            margin-bottom: 12px;
+            font-size: 0.92rem;
+            color: #444;
+        }
+
+        .signature-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed #e0e0e0;
+            animation: fadeInSignature 1s ease forwards;
+        }
+
+        @keyframes fadeInSignature {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .signature-text {
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            color: #d81b60;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+            margin: 10px 0;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Musik Kotak Musik Selamat Ulang Tahun -->
+    <audio id="bg-audio" loop preload="auto">
+        <source src="https://ia800504.us.archive.org/33/items/HappyBirthdayToYouMusicBox/Happy%20Birthday%20to%20You%20(Music%20Box).mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-toggle" id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="bg-decorations" id="decorations"></div>
+
+    <div class="container">
+        <div class="progress-container" id="progress-bar">
+            <div class="progress-dot active" data-scene="1"></div>
+            <div class="progress-dot" data-scene="2"></div>
+            <div class="progress-dot" data-scene="3"></div>
+            <div class="progress-dot" data-scene="4"></div>
+            <div class="progress-dot" data-scene="5"></div>
+        </div>
+
+        <!-- SCENE 1 -->
+        <div class="scene active" id="scene-1">
+            <h1>WAITTT... 👀</h1>
+            <p>WHO'S THE BIRTHDAY GIRL TODAY?</p>
+            <div class="btn-group">
+                <button class="btn" onclick="handleScene1('me')">ME?! 😭</button>
+                <button class="btn btn-secondary" onclick="handleScene1('see')">I'M JUST HERE TO SEE 👀</button>
+            </div>
+            <div class="feedback-box" id="scene1-feedback"></div>
+        </div>
+
+        <!-- SCENE 2 -->
+        <div class="scene" id="scene-2">
+            <h1>SOOO... LET'S REVEAL WHO'S GETTING OLDER TODAY 🎁</h1>
+            <div class="interactive-icon" onclick="revealName()">💌</div>
+            <div id="reveal-content" style="display: none;">
+                <h1 class="highlight-name" style="font-size: 1.6rem; margin-top: 10px;">MUTHIA QURROTA AINI?!</h1>
+                <p>YUP. IT'S YOUR DAY, GIRLLLL! 💗</p>
+                <button class="btn" onclick="goToScene(3)">WAIT, THERE'S MORE...</button>
+            </div>
+            <div id="reveal-prompt">
+                <button class="btn" onclick="revealName()">OPEN ITTT 💌</button>
+            </div>
+        </div>
+
+        <!-- SCENE 3 -->
+        <div class="scene" id="scene-3">
+            <h1>ONE IMPORTANT QUESTION THOUGH... 🤨</h1>
+            <p>IS YOUR AGE GETTING OLDER OR YOUNGER?</p>
+            <div class="btn-group" id="age-btns">
+                <button class="btn" onclick="handleAgeChoice('older')">OLDER, OBVIOUSLY 😭</button>
+                <button class="btn btn-secondary" onclick="handleAgeChoice('younger')">YOUNGER. I'M AGING BACKWARDS 💅</button>
+            </div>
+            <div class="feedback-box" id="age-feedback"></div>
+            <div id="age-next-container" style="display: none; margin-top: 15px;">
+                <button class="btn" onclick="goToScene(4)">NEXT QUESTION 👉</button>
+            </div>
+        </div>
+
+        <!-- SCENE 4 -->
+        <div class="scene" id="scene-4">
+            <h1>BIRTHDAY CHECKPOINT! 📝</h1>
+            <div id="checkpoint-area">
+                <div class="cp-question" id="cp-1">
+                    <p>1. Are you ready for your birthday?</p>
+                    <div class="btn-group">
+                        <button class="btn" onclick="handleCheckpoint(1, 'YESSS 🎉')">YESSS 🎉</button>
+                        <button class="btn btn-secondary" onclick="handleCheckpoint(1, 'NOT READY 😭')">NOT READY 😭</button>
+                    </div>
+                </div>
+                <div class="cp-question" id="cp-2" style="display: none;">
+                    <p>2. Are you ready for more blessings?</p>
+                    <div class="btn-group">
+                        <button class="btn" onclick="handleCheckpoint(2, 'ALWAYS, INSYAALLAH 🤍')">ALWAYS, INSYAALLAH 🤍</button>
+                        <button class="btn btn-secondary" onclick="handleCheckpoint(2, 'GIMME ALL OF THEM 😭')">GIMME ALL OF THEM 😭</button>
+                    </div>
+                </div>
+                <div class="cp-question" id="cp-3" style="display: none;">
+                    <p>3. Do you deserve all the good things coming your way?</p>
+                    <div class="btn-group">
+                        <button class="btn" onclick="handleCheckpoint(3, 'OF COURSE I DO 💅')">OF COURSE I DO 💅</button>
+                        <button class="btn btn-secondary" onclick="handleCheckpoint(3, 'I HOPE SO 🥹')">I HOPE SO 🥹</button>
+                    </div>
+                </div>
+            </div>
+            <div class="feedback-box" id="cp-feedback"></div>
+            <div id="cp-final" style="display: none;">
+                <p><strong>CHECKPOINT COMPLETED! ✅</strong><br>NOW, FOR THE MOST IMPORTANT PART...</p>
+                <button class="btn" onclick="goToScene(5)">OPEN MY BIRTHDAY MESSAGE 💌</button>
+            </div>
+        </div>
+
+        <!-- SCENE 5 -->
+        <div class="scene" id="scene-5">
+            <h1>HAPPY BIRTHDAY, MUTHIA QURROTA AINI! 🎂💗</h1>
+            
+            <div class="grand-message-box">
+                <p id="typed-msg-1"></p>
+                <p id="typed-msg-2" style="margin-top: 10px; font-weight: 500;"></p>
+            </div>
+
+            <div class="cake-container" onclick="blowCandle()">
+                <div style="font-size: 2.5rem;"><span class="candle-flame" id="flame">🕯️</span></div>
+                <div style="font-size: 3.5rem;">🎂</div>
+                <p id="cake-instruction" style="font-size: 0.85rem; color: var(--primary-color); margin-top: 5px; font-weight: 600;">(Klik lilinnya untuk meniup! 🌬️)</p>
+            </div>
+
+            <div class="btn-group" id="scene5-actions" style="display: none; margin-top: 15px;">
+                <button class="btn" onclick="showExtraSurprise()">ONE MORE SURPRISE? 🎁</button>
+                <button class="btn btn-secondary" onclick="restartAdventure()">REPLAY OUR LITTLE ADVENTURE ↻</button>
+            </div>
+
+            <div class="feedback-box" id="extra-surprise-box" style="text-align: center;">
+                <p style="margin-bottom: 0; font-weight: 500; color: #d81b60;">YOU DESERVE ALL THE GOOD THINGS THIS WORLD HAS TO OFFER. STAY HAPPY, STAY KIND, AND KEEP SHINING, MUT! 💗</p>
+            </div>
+
+            <div class="signature-section" id="final-signature" style="display: none;">
+                <p style="font-size: 0.9rem; margin-bottom: 2px;">AND THAT'S A WRAP! 💗</p>
+                <p style="font-size: 0.85rem; color: #666; margin-bottom: 8px;">Hope this little surprise made you smile today!</p>
+                <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 0;">with love,</p>
+                <div class="signature-text">— Tikek Comel ♡</div>
+                <div style="margin-top: 15px;">
+                    <button class="btn" style="padding: 10px 20px; font-size: 0.85rem;" onclick="showFinalPlayful()">OKAY BYEEE, MUT! 🎀</button>
+                </div>
+                <div class="feedback-box" id="final-playful-msg" style="text-align: center; margin-top: 12px;">
+                    <p style="margin-bottom: 0; font-weight: 600; color: #d81b60;">JANGAN LUPA BAHAGIA TERUSSS 😭💗</p>
+                    <button class="btn btn-secondary" style="margin-top: 10px; width: 100%; font-size: 0.85rem;" onclick="restartAdventure()">Replay from the beginning ↻</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const decorContainer = document.getElementById('decorations');
+        const icons = ['✨', '💗', '⭐', '🎈', '🌸', '🤍', '🎀'];
+        for (let i = 0; i < 20; i++) {
+            const span = document.createElement('div');
+            span.classList.add('floating-item');
+            span.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            span.style.left = `${Math.random() * 100}%`;
+            span.style.top = `${Math.random() * 100}%`;
+            span.style.fontSize = `${Math.random() * 1.2 + 0.8}rem`;
+            span.style.animationDuration = `${Math.random() * 6 + 6}s`;
+            span.style.animationDelay = `${Math.random() * 5}s`;
+            decorContainer.appendChild(span);
+        }
+
+        let isMusicPlaying = false;
+        
+        function playBackgroundMusic() {
+            const audio = document.getElementById('bg-audio');
+            const btn = document.getElementById('music-btn');
+            if (!isMusicPlaying) {
+                audio.play().then(() => {
+                    isMusicPlaying = true;
+                    btn.innerHTML = "🔊 Mute Music";
+                }).catch(e => {
+                    console.log("Autoplay blocked or waiting user interaction", e);
+                });
+            }
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bg-audio');
+            const btn = document.getElementById('music-btn');
+            if (!isMusicPlaying) {
+                audio.play().then(() => {
+                    btn.innerHTML = "🔊 Mute Music";
+                    isMusicPlaying = true;
+                }).catch(e => {
+                    console.log("Audio play error:", e);
+                });
+            } else {
+                audio.pause();
+                btn.innerHTML = "🎵 Play Music";
+                isMusicPlaying = false;
+            }
+        }
+
+        function updateProgress(sceneNum) {
+            document.querySelectorAll('.progress-dot').forEach((dot, idx) => {
+                if (idx < sceneNum) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function goToScene(sceneNum) {
+            playBackgroundMusic(); // Otomatis menyalakan musik saat berpindah scene/klik tombol
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById(`scene-${sceneNum}`).classList.add('active');
+            updateProgress(sceneNum);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (sceneNum === 5) {
+                startGrandMessage();
+            }
+        }
+
+        function handleScene1(choice) {
+            playBackgroundMusic(); // Otomatis menyalakan musik saat tombol pertama diklik
+            const fb = document.getElementById('scene1-feedback');
+            fb.style.display = 'block';
+            if (choice === 'see') {
+                fb.innerHTML = "HAHAHA NICE TRY 😭 YOU'RE ALREADY HERE, MIGHT AS WELL CONTINUE!";
+            } else {
+                fb.innerHTML = "OH REALLY?? CONFIDENT MUCH? 😭";
+            }
+            setTimeout(() => {
+                goToScene(2);
+                fb.style.display = 'none';
+            }, 2000);
+        }
+
+        function revealName() {
+            playBackgroundMusic();
+            document.getElementById('reveal-prompt').style.display = 'none';
+            document.getElementById('reveal-content').style.display = 'block';
+            triggerConfetti();
+        }
+
+        function handleAgeChoice(choice) {
+            playBackgroundMusic();
+            const fb = document.getElementById('age-feedback');
+            fb.style.display = 'block';
+            if (choice === 'older') {
+                fb.innerHTML = "ANOTHER YEAR OLDER, ANOTHER YEAR WISER... OR SO WE HOPE 😭🤚";
+            } else {
+                fb.innerHTML = "DELULU IS THE SOLULU 😭💅 NICE TRY, MUT!";
+            }
+            document.getElementById('age-btns').style.display = 'none';
+            document.getElementById('age-next-container').style.display = 'block';
+        }
+
+        let currentCP = 1;
+        function handleCheckpoint(qNum, answerText) {
+            playBackgroundMusic();
+            const fb = document.getElementById('cp-feedback');
+            fb.style.display = 'block';
+            fb.innerHTML = `Selected: "${answerText}" — Noted! ✨`;
+
+            document.getElementById(`cp-${qNum}`).style.display = 'none';
+            if (qNum < 3) {
+                setTimeout(() => {
+                    document.getElementById(`cp-${qNum + 1}`).style.display = 'block';
+                    fb.style.display = 'none';
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    fb.style.display = 'none';
+                    document.getElementById('cp-final').style.display = 'block';
+                }, 1000);
+            }
+        }
+
+        let messageTyped = false;
+        function startGrandMessage() {
+            if (messageTyped) return;
+            messageTyped = true;
+
+            const text1 = "Selamat ulang tahun, semoga umurnya selalu diberkahi, dan Allah selalu jaga dimanapun dan kapan pun itu. Wish u all the best lah pokoknya.";
+            const text2 = "May Allah bless your days, protect you wherever you go, and fill your life with happiness, good health, and beautiful things. Aamiin ya Rabbal 'alamin. 🤍";
+
+            typeWriter('typed-msg-1', text1, 0, () => {
+                typeWriter('typed-msg-2', text2, 0, () => {});
+            });
+        }
+
+        function typeWriter(elementId, text, i, callback) {
+            if (i < text.length) {
+                document.getElementById(elementId).innerHTML += text.charAt(i);
+                setTimeout(() => typeWriter(elementId, text, i + 1, callback), 25);
+            } else if (callback) {
+                callback();
+            }
+        }
+
+        let candleBlown = false;
+        function blowCandle() {
+            playBackgroundMusic();
+            if (candleBlown) return;
+            candleBlown = true;
+            document.getElementById('flame').innerHTML = '💨';
+            document.getElementById('cake-instruction').innerHTML = "MAKE A WISH, BIRTHDAY GIRL! 🕯️✨";
+            triggerConfetti();
+            setTimeout(() => {
+                document.getElementById('scene5-actions').style.display = 'flex';
+            }, 1000);
+        }
+
+        function showExtraSurprise() {
+            playBackgroundMusic();
+            document.getElementById('extra-surprise-box').style.display = 'block';
+            document.getElementById('final-signature').style.display = 'block';
+            triggerConfetti();
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function showFinalPlayful() {
+            playBackgroundMusic();
+            document.getElementById('final-playful-msg').style.display = 'block';
+        }
+
+        function restartAdventure() {
+            playBackgroundMusic();
+            messageTyped = false;
+            candleBlown = false;
+            document.getElementById('typed-msg-1').innerHTML = '';
+            document.getElementById('typed-msg-2').innerHTML = '';
+            document.getElementById('flame').innerHTML = '🕯️';
+            document.getElementById('cake-instruction').innerHTML = "(Klik lilinnya untuk meniup! 🌬️)";
+            document.getElementById('scene5-actions').style.display = 'none';
+            document.getElementById('extra-surprise-box').style.display = 'none';
+            document.getElementById('final-signature').style.display = 'none';
+            document.getElementById('final-playful-msg').style.display = 'none';
+            document.getElementById('reveal-prompt').style.display = 'block';
+            document.getElementById('reveal-content').style.display = 'none';
+            document.getElementById('age-btns').style.display = 'flex';
+            document.getElementById('age-next-container').style.display = 'none';
+            document.getElementById('cp-1').style.display = 'block';
+            document.getElementById('cp-2').style.display = 'none';
+            document.getElementById('cp-3').style.display = 'none';
+            document.getElementById('cp-final').style.display = 'none';
+            goToScene(1);
+        }
+
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+            const colors = ['#ff758c', '#ff7eb3', '#ffd1dc', '#fff', '#ffb6c1', '#dda0dd'];
+
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 12,
+                    vy: (Math.random() - 0.7) * 12,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 100
+                });
+            }
+
+            function update() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, index) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.4;
+                    p.life--;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    if (p.life <= 0) particles.splice(index, 1);
+                });
+                if (particles.length > 0) {
+                    requestAnimationFrame(update);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            update();
+        }
+    </script>
+</body>
+</html>
